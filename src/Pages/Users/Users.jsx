@@ -1,4 +1,4 @@
-import React , {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,15 +7,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import Layout from './../Layout/Layout';
 import '../../Styles/Css/Users.min.css';
 import { UserService } from './../../Services/Service';
+import useStyles from '../../Components/UseStyle/UseStyle'
 
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-});
 
 export default function BasicTable() {
     const classes = useStyles();
@@ -23,7 +20,7 @@ export default function BasicTable() {
     let AllUser = new UserService()
     const GetUsers = async () => {
         try {
-            let res =  await AllUser.getAll();
+            let res = await AllUser.getAll();
             // console.log(res.data)
             setUsers(res.data)
         } catch (error) {
@@ -32,16 +29,17 @@ export default function BasicTable() {
     }
 
     useEffect(() => {
-        GetUsers()   
+        GetUsers()
     }, [])
-    
-    const [Users,setUsers ] = useState([]);
+
+    const [Users, setUsers] = useState([]);
 
 
     return (
         <Layout>
-             {/* باید یه دکمه به صورت speedDial در پاین صفحه قرار دهم و آن را به مودال
+            {/* باید یه دکمه به صورت speedDial در پاین صفحه قرار دهم و آن را به مودال
              اضافه کردن کاربر متصل کنم */}
+
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
@@ -53,10 +51,12 @@ export default function BasicTable() {
                             <TableCell align="left">Color of hair</TableCell>
                             <TableCell align="center">Height&nbsp;(g)</TableCell>
                             <TableCell align="center">Weight&nbsp;(g)</TableCell>
+                            <TableCell align="center">Edit</TableCell>
+                            <TableCell align="center">Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {Users.map((row , index) => (
+                        {Users.map((row, index) => (
                             <TableRow key={index}>
                                 <TableCell component="th" scope="row">
                                     {row.first_name}
@@ -67,6 +67,30 @@ export default function BasicTable() {
                                 <TableCell align="center">{row.color_of_hair}</TableCell>
                                 <TableCell align="center">{row.height}</TableCell>
                                 <TableCell align="center">{row.weight}</TableCell>
+                                <TableCell align="center">
+                                    <Button
+                                        onClick={() => { alert('clicked') }}
+                                        variant="outlined"
+                                        classes={{
+                                            root: classes.btn_edit, // class name, e.g. `classes-nesting-root-x`
+                                            label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
+                                </TableCell>
+                                <TableCell align="center">
+                                    <Button
+                                        onClick={() => { alert('clicked') }}
+                                        variant="outlined"
+                                        classes={{
+                                            root: classes.btn_delete, // class name, e.g. `classes-nesting-root-x`
+                                            label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                                        }}
+                                    >
+                                        Delete
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
