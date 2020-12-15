@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import {
+    Table,
+    Button,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead, TableRow,
+    Paper,
+} from '@material-ui/core';
 import Layout from './../Layout/Layout';
+import { UserService } from '../../Services/Service.Users';
+import useStyles from '../../Components/UseStyle/UseStyle';
+import DeleteUser from '../../Components/Dialogs/DeleteUser';
 import '../../Styles/Css/Users.min.css';
-import { UserService } from './../../Services/Service';
-import useStyles from '../../Components/UseStyle/UseStyle'
 
 
 export default function BasicTable() {
@@ -20,26 +21,36 @@ export default function BasicTable() {
     let AllUser = new UserService()
     const GetUsers = async () => {
         try {
-            let res = await AllUser.getAll();
+            let res = await AllUser.getUsers()
             // console.log(res.data)
             setUsers(res.data)
         } catch (error) {
             console.log('error')
         }
     }
-
     useEffect(() => {
         GetUsers()
     }, [])
-
     const [Users, setUsers] = useState([]);
 
 
+    const [DeleteConfirm, setDeleteConfirm] = useState(false)
+    const OpenDeleteConfirm = () => {
+        setDeleteConfirm(true)
+    }
+    const CloseConfirm = () => {
+        setDeleteConfirm(false)
+    }
+
     return (
         <Layout>
+            
+            <DeleteUser Open={DeleteConfirm} Close={CloseConfirm} />
+        
             {
             /* باید یه دکمه به صورت speedDial در پاین صفحه قرار دهم و آن را به مودال
-             اضافه کردن کاربر متصل کنم */}
+             اضافه کردن کاربر متصل کنم */
+             }
 
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
@@ -82,7 +93,7 @@ export default function BasicTable() {
                                 </TableCell>
                                 <TableCell align="center">
                                     <Button
-                                        onClick={() => { alert('clicked') }}
+                                        onClick={OpenDeleteConfirm}
                                         variant="outlined"
                                         classes={{
                                             root: classes.btn_delete, // class name, e.g. `classes-nesting-root-x`
@@ -98,5 +109,6 @@ export default function BasicTable() {
                 </Table>
             </TableContainer>
         </Layout>
+        
     );
 }

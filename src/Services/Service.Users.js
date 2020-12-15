@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export class UserService {
-    getAll() {
+    getUsers() {
         return Axios.get("http://localhost:4444/person")
     }
 }
