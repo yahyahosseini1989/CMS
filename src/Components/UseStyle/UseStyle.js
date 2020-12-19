@@ -1,7 +1,7 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles =  makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
@@ -26,6 +26,12 @@ const useStyles =  makeStyles({
     label: {
         textTransform: 'uppercase',
     },
-});
+    snackBar: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    }
+}));
 
 export default useStyles;

@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Table,
-    Button,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead, TableRow,
-    Paper,
-} from '@material-ui/core';
+import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import Layout from './../Layout/Layout';
 import { UserService } from '../../Services/Service.Users';
 import useStyles from '../../Components/UseStyle/UseStyle';
 import DeleteUser from '../../Components/Dialogs/DeleteUser';
 import '../../Styles/Css/Users.min.css';
+import ActionButtons from './../../Components/ActionButtons/ActionButtons';
+import AddUser from './AddUser';
 
 
-export default function BasicTable() {
+export default function BasicTable(props) {
     const classes = useStyles();
 
     let AllUser = new UserService()
@@ -35,22 +29,36 @@ export default function BasicTable() {
 
 
     const [DeleteConfirm, setDeleteConfirm] = useState(false)
-    const OpenDeleteConfirm = () => {
-        setDeleteConfirm(true)
+    const [ID, setID] = useState();
+    const OpenDeleteConfirm = (id) => {
+        setDeleteConfirm(true);
+        setID(id);
     }
     const CloseConfirm = () => {
         setDeleteConfirm(false)
     }
 
+    const applyRow = async (id) => {
+        try {
+            await AllUser.deleteUser(id);
+            GetUsers();
+            CloseConfirm()
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <Layout>
+
+            <AddUser />
+            <ActionButtons aria_label={'add'}  />
             
-            <DeleteUser Open={DeleteConfirm} Close={CloseConfirm} />
-        
             {
-            /* باید یه دکمه به صورت speedDial در پاین صفحه قرار دهم و آن را به مودال
-             اضافه کردن کاربر متصل کنم */
-             }
+                /* باید یه دکمه به صورت speedDial در پاین صفحه قرار دهم و آن را به مودال
+                 اضافه کردن کاربر متصل کنم */
+            }
 
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
@@ -93,7 +101,7 @@ export default function BasicTable() {
                                 </TableCell>
                                 <TableCell align="center">
                                     <Button
-                                        onClick={OpenDeleteConfirm}
+                                        onClick={() => { OpenDeleteConfirm(row._id) }}
                                         variant="outlined"
                                         classes={{
                                             root: classes.btn_delete, // class name, e.g. `classes-nesting-root-x`
@@ -108,7 +116,9 @@ export default function BasicTable() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            
+            <DeleteUser Open={DeleteConfirm} Close={CloseConfirm} Id={ID} applyRow={(id) => { applyRow(id) }} />
         </Layout>
-        
+
     );
 }

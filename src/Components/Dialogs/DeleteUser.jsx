@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Dialog, Button, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
+import CustomizedSnackbars from './../Snackbar/Snackbar';
 
 export default function DeleteUser(props) {
   // const [open, setOpen] = React.useState(false);
@@ -12,7 +13,10 @@ export default function DeleteUser(props) {
   //   setOpen(false);
   // };
 
-
+  const sendConfirm = (Id) => {
+    props.applyRow(Id)
+  }
+  
   return (
     <Fragment>
       <Dialog
@@ -29,13 +33,13 @@ export default function DeleteUser(props) {
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={props.Close} // وقتی پراپس را از کامپوننت دیگری پاس میدهیم ، باسید اسم کی آن ار در اینجا فراخوانی کنیم نه محتوای جلوی مساوی آن را
+            onClick={props.Close} // وقتی پراپس را از کامپوننت دیگری پاس میدهیم ، باید اسم کی آن ار در اینجا فراخوانی کنیم نه محتوای جلوی مساوی آن را
             color="primary"
           >
             Cancel
           </Button>
           <Button
-            onClick={()=>{alert()}}
+            onClick={()=>{sendConfirm(props.Id)}}
             color="primary"
             autoFocus
           >
@@ -43,6 +47,7 @@ export default function DeleteUser(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <CustomizedSnackbars />
     </Fragment>
   );
 }
