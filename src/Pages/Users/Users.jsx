@@ -49,10 +49,17 @@ export default function BasicTable(props) {
         }
     }
 
+
+    const LastUser = async (values) => {
+        await AllUser.createUser(values);
+        console.log(values)
+        GetUsers();
+    }
+
     return (
         <Layout>
 
-            <AddUser />
+            
             <ActionButtons aria_label={'add'}  />
             
             {
@@ -116,7 +123,9 @@ export default function BasicTable(props) {
                     </TableBody>
                 </Table>
             </TableContainer>
+
             
+            <AddUser NewUserValue={(values) => { LastUser(values) }} />
             <DeleteUser Open={DeleteConfirm} Close={CloseConfirm} Id={ID} applyRow={(id) => { applyRow(id) }} />
         </Layout>
 

@@ -1,197 +1,195 @@
-import { React, Fragment } from 'react';
-import { FormControl, InputLabel, Input, FormHelperText, Button, Grid, Form } from '@material-ui/core';
-import Layout from './../Layout/Layout';
-import { Formik } from "formik";
-import * as Yup from 'yup';
-import ActionButtons from '../../Components/ActionButtons/ActionButtons';
+import React from 'react';
+import { useFormik } from 'formik';
+import { FormControl, InputLabel, Input, FormHelperText, Grid, Button } from '@material-ui/core';
 
 
-const AddUser = () => {
+const AddUser = (props) => {
+    const formik = useFormik({
+        initialValues: {
+            first_name: '',
+            last_name: '',
+            phone_number: '',
+            email: '',
+            height: '',
+            weight: '',
+            color_of_body: '',
+            color_of_hair: '',
+        },
+        onSubmit: (values) => {
+            NewUser(values)
+        },
+    });
 
-
-    // const validationForm = Yup.object({
-    //     first_name: Yup.string().required('Required'),
-    //     last_name: Yup.string().required('Required'),
-    //     email: Yup.string().required('Required'),
-    // })
-
-    const SubmitForm = async (value) => {
-        console.log(value)
-        // await _PersonUsers.create(value);
-        // props.history.push("/users/users")
+    const NewUser = (values) => {
+        props.NewUserValue(values)
     }
 
     return (
-        <Layout>
-
-            <ActionButtons aria_label={'add'} />
-            
-            <Formik
-                // initialValues={initialValueOfForm}
-                onSubmit={(e) => SubmitForm(e)}
-                // validationSchema={validationForm}
-            >
-                {({ handleSubmit, handleChange, handleBlur, errors, touched }) => (
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="first_name">First Name</InputLabel>
-                                <Input
-                                    type="text"
-                                    name={"first_name"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="first_name"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your first name.
-                                </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="last_name">Last Name</InputLabel>
-                                <Input
-                                    type="text"
-                                    name={"last_name"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="last_name"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your Last name.
-                                </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="phone_number">Phone Number</InputLabel>
-                                <Input
-                                    type="text"
-                                    name={"phone_number"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="phone_number"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your Phone Number.
-                                </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="email">Email</InputLabel>
-                                <Input
-                                    type="email"
-                                    name={"email"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="email"
-                                    id="phone_number"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your Email.
-                                </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="height">Height</InputLabel>
-                                <Input
-                                    type="text"
-                                    name={"height"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="height"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your Height.
-                            </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="weight">Weight</InputLabel>
-                                <Input
-                                    type="text"
-                                    name={"weight"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="weight"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your Weight.
-                                </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="color_of_body">Color of Body</InputLabel>
-                                <Input
-                                    type="text"
-                                    name={"color_of_body"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="color_of_body"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your Color of Body.
-                                </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel htmlFor="color_of_hair">Color of Hair</InputLabel>
-                                <Input
-                                    type="text"
-                                    name={"color_of_hair"}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    id="color_of_hair"
-                                    aria-describedby="my-helper-text"
-                                />
-                                <FormHelperText
-                                    id="my-helper-text"
-                                >
-                                    We'll never share your Color of Hair.
-                                </FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button
-                                onClick={() => handleSubmit()}
-                                type={"submit"}
-                                variant="contained"
-                                color="primary"
-                            >
-                                Register
+        <form onSubmit={formik.handleSubmit}>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="first_name">First Name</InputLabel>
+                        <Input
+                            type="text"
+                            name={"first_name"}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.first_name}
+                            id="first_name"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your first name.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="last_name">Last Name</InputLabel>
+                        <Input
+                            type="text"
+                            name={"last_name"}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.last_name}
+                            id="last_name"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your Last name.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="phone_number">Phone Number</InputLabel>
+                        <Input
+                            type="text"
+                            name={"phone_number"}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.phone_number}
+                            id="phone_number"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your Phone Number.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="email">Email</InputLabel>
+                        <Input
+                            type="email"
+                            name={"email"}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.email}
+                            id="email"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your Email.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="height">Height</InputLabel>
+                        <Input
+                            type="text"
+                            name={"height"}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.height}
+                            id="height"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your Height.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="weight">Weight</InputLabel>
+                        <Input
+                            type="text"
+                            name={"weight"}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.weight}
+                            id="weight"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your Weight.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="color_of_body">Color of Body</InputLabel>
+                        <Input
+                            type="text"
+                            name={"color_of_body"}
+                            onChange={formik.handleChange} onBlur={formik.handleBlur}
+                            value={formik.values.color_of_body}
+                            id="color_of_body"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your Color of Body.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="color_of_hair">Color of Hair</InputLabel>
+                        <Input
+                            type="text"
+                            name={"color_of_hair"}
+                            onChange={formik.handleChange} onBlur={formik.handleBlur}
+                            value={formik.values.color_of_hair}
+                            id="color_of_hair"
+                            aria-describedby="my-helper-text"
+                        />
+                        <FormHelperText
+                            id="my-helper-text"
+                        >
+                            We'll never share your Color of Hair.
+                        </FormHelperText>
+                    </FormControl>
+                </Grid>
+                {/* <Grid item xs={6}>
+                    <Button
+                        onClick={() => handleSubmit()}
+                        type={"submit"}
+                        variant="contained"
+                        color="primary"
+                    >
+                        Register
                             </Button>
-                        </Grid>
-                    </Grid>
-                )}
-            </Formik>
-        </Layout>
+                </Grid> */}
+            </Grid>
+            <Button type="submit">Submit</Button>
+        </form>
     );
-}
+};
 export default AddUser;
