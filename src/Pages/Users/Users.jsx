@@ -7,15 +7,16 @@ import DeleteUser from '../../Components/Dialogs/DeleteUser';
 import '../../Styles/Css/Users.min.css';
 import ActionButtons from './../../Components/ActionButtons/ActionButtons';
 import AddUser from './AddUser';
+import EditUser from '../../Components/Dialogs/EditUser';
 
 
-export default function BasicTable(props) {
+export default function BasicTable(_props) {
     const classes = useStyles();
 
     let AllUser = new UserService()
     const GetUsers = async () => {
         try {
-            let res = await AllUser.getUsers()
+            let res = await AllUser.readApi()
             // console.log(res.data)
             setUsers(res.data)
         } catch (error) {
@@ -26,7 +27,7 @@ export default function BasicTable(props) {
         GetUsers()
     }, [])
     const [Users, setUsers] = useState([]);
-
+    // get user
 
     const [DeleteConfirm, setDeleteConfirm] = useState(false)
     const [ID, setID] = useState();
@@ -34,38 +35,68 @@ export default function BasicTable(props) {
         setDeleteConfirm(true);
         setID(id);
     }
-    const CloseConfirm = () => {
+    const closeConfirm = () => {
         setDeleteConfirm(false)
+        setEditConfirm(false);
     }
-
     const applyRow = async (id) => {
+        console.log(id)
         try {
-            await AllUser.deleteUser(id);
+            await AllUser.deleteApi(id);
             GetUsers();
-            CloseConfirm()
+            closeConfirm()
         }
         catch (error) {
             console.error(error)
         }
     }
-
+    // delete user
 
     const LastUser = async (values) => {
-        await AllUser.createUser(values);
-        console.log(values)
+        await AllUser.createApi(values);
+        // console.log(values)
         GetUsers();
     }
+    // create user
+    const [editConfirm, setEditConfirm] = useState(false)
+    const OpenEditConfirm = (id) => {
+        // console.log(id)
+        setEditConfirm(true);
+        editUser(id)
+    }
+    const [initialUserData, setInitialUserData] = useState({
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        email: '',
+        height: '',
+        weight: '',
+        color_of_body: '',
+        color_of_hair: '',
+    })
+    const editUser = async (id) => {
+        let res = await AllUser.getApiById(id)
+        setInitialUserData(res.data)
+        console.log(initialUserData)
+    }
+    const modifiedUserData = async (values) => {
+        // await AllUser.updateApiById(id)
+        // GetUsers()
+        alert(values);
+    }
+    // update user
 
     return (
         <Layout>
 
-            
-            <ActionButtons aria_label={'add'}  />
-            
-            {
-                /* باید یه دکمه به صورت speedDial در پاین صفحه قرار دهم و آن را به مودال
-                 اضافه کردن کاربر متصل کنم */
-            }
+            <EditUser
+                Open={editConfirm}
+                Close={closeConfirm}
+                initialUserData={initialUserData}
+                modifiedUserData={(values) => { modifiedUserData(values) }}
+            />
+
+            {/* <ActionButtons aria_label={'add'} /> */} 
 
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
@@ -96,7 +127,7 @@ export default function BasicTable(props) {
                                 <TableCell align="center">{row.weight}</TableCell>
                                 <TableCell align="center">
                                     <Button
-                                        onClick={() => { alert('clicked') }}
+                                        onClick={() => { OpenEditConfirm(row._id) }}
                                         variant="outlined"
                                         classes={{
                                             root: classes.btn_edit, // class name, e.g. `classes-nesting-root-x`
@@ -124,9 +155,15 @@ export default function BasicTable(props) {
                 </Table>
             </TableContainer>
 
-            
-            <AddUser NewUserValue={(values) => { LastUser(values) }} />
-            <DeleteUser Open={DeleteConfirm} Close={CloseConfirm} Id={ID} applyRow={(id) => { applyRow(id) }} />
+            <AddUser
+                NewUserValue={(values) => { LastUser(values) }}
+            />
+            <DeleteUser
+                Open={DeleteConfirm}
+                Close={closeConfirm}
+                Id={ID} 
+                applyRow={(id) => { applyRow(id) }}
+            />
         </Layout>
 
     );

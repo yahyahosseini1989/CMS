@@ -2,14 +2,20 @@ import Axios from "axios";
 
 // const URL = "http://localhost:4444/person"
 export class UserService {
-    getUsers() {
+    readApi() {
         return Axios.get("http://localhost:4444/person")
     }
-    deleteUser(id) {
+    deleteApi(id) {
         // return Axios.delete("http://localhost:4444/person/"+id);
         return Axios.delete(`http://localhost:4444/person/${id}`);
     }
-    createUser(data) {
+    createApi(data) {
         return Axios.post("http://localhost:4444/person", data)
+    }
+    getApiById(id) {
+        return Axios.get(`http://localhost:4444/person/${id}`)
+    }
+    updateApiById(id) {
+        return Axios.patch(`http://localhost:4444/person/${id}`)
     }
 }
