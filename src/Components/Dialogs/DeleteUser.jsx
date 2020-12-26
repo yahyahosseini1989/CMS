@@ -16,7 +16,7 @@ export default function DeleteUser(props) {
   const sendConfirm = (Id) => {
     props.applyRow(Id)
   }
-  
+
   return (
     <Fragment>
       <Dialog
@@ -28,18 +28,18 @@ export default function DeleteUser(props) {
         <DialogTitle id="alert-dialog-title">{"Attention!"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure to remove USER ( بعدا اسم کاربر رو به اینجا پاس بدم ) ?
+            Are you sure to remove this user with this Email: "{props.Name}"  ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button
             onClick={props.Close} // وقتی پراپس را از کامپوننت دیگری پاس میدهیم ، باید اسم کی آن ار در اینجا فراخوانی کنیم نه محتوای جلوی مساوی آن را
-            color="primary"
+            color="secondary"
           >
             Cancel
           </Button>
           <Button
-            onClick={()=>{sendConfirm(props.Id)}}
+            onClick={() => { sendConfirm(props.Id) }}
             color="primary"
             autoFocus
           >

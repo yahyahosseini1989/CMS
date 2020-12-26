@@ -15,7 +15,7 @@ export class UserService {
     getApiById(id) {
         return Axios.get(`http://localhost:4444/person/${id}`)
     }
-    updateApiById(id) {
-        return Axios.patch(`http://localhost:4444/person/${id}`)
+    updateApi(data, id) {
+        return Axios.patch(`http://localhost:4444/person/${id}`, data)
     }
 }

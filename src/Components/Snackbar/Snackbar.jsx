@@ -8,7 +8,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function CustomizedSnackbars(props) {
+export default function Snackbars(props) {
   const classes = useStyles();
   // const [open, setOpen] = React.useState(false);
 
@@ -27,15 +27,17 @@ export default function CustomizedSnackbars(props) {
     <div className={classes.snackBar}>
       <Snackbar
         // open={open}
-        open={props.Open}
+        open={props.open}
         autoHideDuration={2000}
-        // onClose={handleClose}
+      // onClose={handleCloseSnakbar}
+      // onClose={handleCloseSnakbar}
       >
         <Alert
-          // onClose={handleClose}
-          severity="warning"
+          // onClose={handleCloseSnakbar}
+          onClose={props.CloseSnackbar}
+          severity="success"
         >
-          This is a warning message!
+          This is a success message!
         </Alert>
       </Snackbar>
       {/* <Alert severity="error">This is an error message!</Alert>

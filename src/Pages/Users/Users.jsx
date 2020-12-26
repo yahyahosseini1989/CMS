@@ -5,9 +5,13 @@ import { UserService } from '../../Services/Service.Users';
 import useStyles from '../../Components/UseStyle/UseStyle';
 import DeleteUser from '../../Components/Dialogs/DeleteUser';
 import '../../Styles/Css/Users.min.css';
-import ActionButtons from './../../Components/ActionButtons/ActionButtons';
-import AddUser from './AddUser';
 import EditUser from '../../Components/Dialogs/EditUser';
+import { AddUser } from '../../Components/Dialogs/AddUser';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+// import IntegrationNotistack from '../../Components/Snackbar/Snackbar'
+import { useSnackbar } from 'notistack';
+import Snackbars from '../../Components/Snackbar/Snackbar';
 
 
 export default function BasicTable(_props) {
@@ -31,20 +35,23 @@ export default function BasicTable(_props) {
 
     const [DeleteConfirm, setDeleteConfirm] = useState(false)
     const [ID, setID] = useState();
-    const OpenDeleteConfirm = (id) => {
+    const [ID_exactName, setID_exactName] = useState();
+    const OpenDeleteConfirm = (id, name) => {
         setDeleteConfirm(true);
+        setID_exactName(name)
         setID(id);
     }
     const closeConfirm = () => {
         setDeleteConfirm(false)
-        setEditConfirm(false);
+        setEditConfirm(false)
+        setAddConfirm(false)
     }
     const applyRow = async (id) => {
-        console.log(id)
         try {
             await AllUser.deleteApi(id);
-            GetUsers();
+            GetUsers()
             closeConfirm()
+            handleOpenSnakbar()
         }
         catch (error) {
             console.error(error)
@@ -52,18 +59,16 @@ export default function BasicTable(_props) {
     }
     // delete user
 
+    const [AddConfirm, setAddConfirm] = useState(false)
+    const OpenAddConfirm = () => { setAddConfirm(true) }
     const LastUser = async (values) => {
         await AllUser.createApi(values);
-        // console.log(values)
         GetUsers();
+        setAddConfirm(false);
     }
     // create user
+
     const [editConfirm, setEditConfirm] = useState(false)
-    const OpenEditConfirm = (id) => {
-        // console.log(id)
-        setEditConfirm(true);
-        editUser(id)
-    }
     const [initialUserData, setInitialUserData] = useState({
         first_name: '',
         last_name: '',
@@ -74,29 +79,71 @@ export default function BasicTable(_props) {
         color_of_body: '',
         color_of_hair: '',
     })
-    const editUser = async (id) => {
-        let res = await AllUser.getApiById(id)
-        setInitialUserData(res.data)
-        console.log(initialUserData)
+    const OpenEditConfirm = (UserData) => {
+        console.log(UserData, 'mammad')
+        setInitialUserData(UserData)
+        setEditConfirm(true);
     }
-    const modifiedUserData = async (values) => {
-        // await AllUser.updateApiById(id)
-        // GetUsers()
-        alert(values);
+    const modifiedUserData = async (value) => {
+        let data = {
+            first_name: value.first_name,
+            last_name: value.last_name,
+            phone_number: value.phone_number,
+            email: value.email,
+            height: value.height,
+            weight: value.weight,
+            color_of_body: value.color_of_body,
+            color_of_hair: value.color_of_hair,
+        }
+        await AllUser.updateApi(data, value._id)
+        GetUsers()
+        closeConfirm()
     }
     // update user
 
+    const [openSnakbar, setOpenSnakbar] = React.useState(false);
+    const handleOpenSnakbar = () => {
+        setOpenSnakbar(true);
+    };
+    const handleCloseSnakbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnakbar(false);
+    };
+
+
     return (
         <Layout>
+            <Snackbars open={openSnakbar} CloseSnackbar={handleCloseSnakbar} />
 
+            {/* <ActionButtons aria_label={'add'} /> */}
+            <Fab
+                color="primary"
+                aria-label="add"
+                className={classes.fab}
+                onClick={() => { OpenAddConfirm() }}
+            >
+                <AddIcon />
+            </Fab>
+            <AddUser
+                NewUserValue={(values) => { LastUser(values) }}
+                Open={AddConfirm}
+                Close={closeConfirm}
+            />
             <EditUser
                 Open={editConfirm}
                 Close={closeConfirm}
                 initialUserData={initialUserData}
-                modifiedUserData={(values) => { modifiedUserData(values) }}
+                modifiedUserData={(value) => { modifiedUserData(value) }}
             />
-
-            {/* <ActionButtons aria_label={'add'} /> */} 
+            <DeleteUser
+                Open={DeleteConfirm}
+                Close={closeConfirm}
+                Id={ID}
+                applyRow={(id) => { applyRow(id) }}
+                Name={ID_exactName}
+            />
 
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
@@ -127,7 +174,7 @@ export default function BasicTable(_props) {
                                 <TableCell align="center">{row.weight}</TableCell>
                                 <TableCell align="center">
                                     <Button
-                                        onClick={() => { OpenEditConfirm(row._id) }}
+                                        onClick={() => { OpenEditConfirm(row) }}
                                         variant="outlined"
                                         classes={{
                                             root: classes.btn_edit, // class name, e.g. `classes-nesting-root-x`
@@ -139,7 +186,7 @@ export default function BasicTable(_props) {
                                 </TableCell>
                                 <TableCell align="center">
                                     <Button
-                                        onClick={() => { OpenDeleteConfirm(row._id) }}
+                                        onClick={() => { OpenDeleteConfirm(row._id, row.email) }}
                                         variant="outlined"
                                         classes={{
                                             root: classes.btn_delete, // class name, e.g. `classes-nesting-root-x`
@@ -155,15 +202,6 @@ export default function BasicTable(_props) {
                 </Table>
             </TableContainer>
 
-            <AddUser
-                NewUserValue={(values) => { LastUser(values) }}
-            />
-            <DeleteUser
-                Open={DeleteConfirm}
-                Close={closeConfirm}
-                Id={ID} 
-                applyRow={(id) => { applyRow(id) }}
-            />
         </Layout>
 
     );

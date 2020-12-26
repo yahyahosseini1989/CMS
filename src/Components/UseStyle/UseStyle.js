@@ -31,7 +31,16 @@ const useStyles = makeStyles((theme) => ({
         '& > * + *': {
             marginTop: theme.spacing(2),
         },
-    }
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+    },
+    fab: {
+        position: 'fixed',
+        bottom: theme.spacing(2),
+        left: theme.spacing(2),
+    },
 }));
 
 export default useStyles;
