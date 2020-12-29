@@ -1,14 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import { SwipeableDrawer, Button, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MailIcon from '@material-ui/icons/Mail';
+import HomeIcon from '@material-ui/icons/Home';
+import AccountIcon from '@material-ui/icons/AccountBox';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     list: {
@@ -40,18 +41,36 @@ export default function SwipeableTemporaryDrawer(props) {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                <ListItem button >
-                    <ListItemIcon><InboxIcon /></ListItemIcon>
-                    <ListItemText primary={"Home"} />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon><InboxIcon /></ListItemIcon>
-                    <ListItemText primary={"Users"} />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon><MailIcon /></ListItemIcon>
-                    <ListItemText primary={"Todo"} />
-                </ListItem>
+                <Link to="/">
+                    <ListItem button >
+                        <ListItemIcon><HomeIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary={"Home"} />
+                    </ListItem>
+                </Link>
+                <Link to="/Users">
+                    <ListItem button>
+                        <ListItemIcon><AccountIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary={"Users"} />
+                    </ListItem>
+                </Link>
+                <Link to="/Todo">
+                    <ListItem button>
+                        <ListItemIcon><EventAvailableIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary={"Todo"} />
+                    </ListItem>
+                </Link>
+                <Link to="/Contact">
+                    <ListItem button>
+                        <ListItemIcon><HeadsetMicIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary={"Contact Us"} />
+                    </ListItem>
+                </Link>
+                <Link to="/About">
+                    <ListItem button>
+                        <ListItemIcon><HelpOutlineIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary={"About Us"} />
+                    </ListItem>
+                </Link>
             </List>
         </div>
     );

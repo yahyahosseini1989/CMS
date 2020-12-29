@@ -9,12 +9,10 @@ import EditUser from '../../Components/Dialogs/EditUser';
 import { AddUser } from '../../Components/Dialogs/AddUser';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-// import IntegrationNotistack from '../../Components/Snackbar/Snackbar'
-import { useSnackbar } from 'notistack';
 import Snackbars from '../../Components/Snackbar/Snackbar';
 
 
-export default function BasicTable(_props) {
+export default function Users(props) {
     const classes = useStyles();
 
     let AllUser = new UserService()
