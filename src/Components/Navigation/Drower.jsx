@@ -1,8 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { SwipeableDrawer, Button, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
+import { SwipeableDrawer, Button, List, ListItem, ListItemIcon, ListItemText, Divider } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountIcon from '@material-ui/icons/AccountBox';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
@@ -59,6 +58,7 @@ export default function SwipeableTemporaryDrawer(props) {
                         <ListItemText primary={"Todo"} />
                     </ListItem>
                 </Link>
+                <Divider />
                 <Link to="/Contact">
                     <ListItem button>
                         <ListItemIcon><HeadsetMicIcon color="primary" /></ListItemIcon>

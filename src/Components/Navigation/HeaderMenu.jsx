@@ -157,12 +157,11 @@ export default function PrimarySearchAppBar() {
   );
 
 
-  const [drower, setDrower] = useState({
-    left: false
-  });
+  const [drower, setDrower] = useState(false);
 
   const drowerHandler = () => {
     setDrower(true)
+    console.log(drower)
   }
 
   return (
@@ -234,7 +233,7 @@ export default function PrimarySearchAppBar() {
         {renderMobileMenu}
         {renderMenu}
       </div>
-      <Drower drower={drower} />
+      <Drower openDrawer={drower} />
     </>
   );
 }
