@@ -1,21 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from './../Layout/Layout'
-import TodoList from './../Todo/TodoList'
 import TodoAppBar from './../Todo/TodoAppBar'
+import NewTodo from './../Todo/NewTodo'
+import TodoList from './../Todo/TodoList'
 
-import { Container, Input, Button } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 
 const Todo = () => {
+    const [lastTodo, setLastTodo] = useState([])
+    const getTodo = (newTodo) => {
+        // setLastTodo(newTodo)
+        setLastTodo(...lastTodo, newTodo)
+        console.log(lastTodo)
+    }
     return (
         <Layout>
-
             <Container maxWidth="md">
                 <TodoAppBar />
-                
-                <TodoList />
+                <NewTodo newTodo={(newTodo)=>{getTodo(newTodo)}} />
+                <TodoList lastTodo={lastTodo}/>
             </Container>
-
-
         </Layout>
     );
 }

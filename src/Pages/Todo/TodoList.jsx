@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,11 +7,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -28,64 +24,42 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function generate(element) {
-    return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-            key: value,
-        }),
-    );
-}
+
+// function generate(LastTodo) {
+//     return generate.map((value) =>
+//         React.cloneElement(LastTodo, {
+//             key: value,
+//         }),
+//     );
+// }
 
 export default function TodoList(props) {
     const classes = useStyles();
-    const [dense, setDense] = React.useState(false);
-    const [secondary, setSecondary] = React.useState(true);
-
+    const todos = [props.lastTodo];
     return (
         <>
-            <FormGroup row>
-                {/* <FormControlLabel
-                    control={
-                        <Checkbox checked={dense} onChange={(event) => setDense(event.target.checked)} />
-                    }
-                    label="Enable dense"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            hidden={true}
-                            checked={secondary}
-                            onChange={(event) => setSecondary(event.target.checked)}
-                        />
-                    }
-                    label="Enable secondary text"
-                /> */}
-            </FormGroup>
 
-            <Grid item xs={12} sm={12} md={12} >
-                <Typography variant="h6" className={classes.title}>
-                    You can choose any row to edit or delete.
-                </Typography>
+            <Grid item xs={12} >
                 <div className={classes.demo}>
-                    <List dense={dense}>
-                        {generate(
-                            <ListItem>
+                    <List>
+                        {todos.map((todo, index)=>(
+                            <ListItem key={index}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         <FolderIcon />
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="Single-line item"
-                                    secondary={secondary ? 'Secondary text' : null}
+                                    primary={todo}
                                 />
+                                
                                 <ListItemSecondaryAction>
                                     <IconButton edge="end" aria-label="delete">
                                         <DeleteIcon />
                                     </IconButton>
                                 </ListItemSecondaryAction>
-                            </ListItem>,
-                        )}
+                            </ListItem>
+                        ))}
                     </List>
                 </div>
             </Grid>
