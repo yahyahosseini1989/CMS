@@ -24,25 +24,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-// function generate(LastTodo) {
-//     return generate.map((value) =>
-//         React.cloneElement(LastTodo, {
-//             key: value,
-//         }),
-//     );
-// }
-
 export default function TodoList(props) {
     const classes = useStyles();
-    const todos = [props.lastTodo];
+    const todos = ([props.lastTodo])
     return (
         <>
 
             <Grid item xs={12} >
                 <div className={classes.demo}>
                     <List>
-                        {todos.map((todo, index)=>(
+                        {todos.map((item, index)=>(
                             <ListItem key={index}>
                                 <ListItemAvatar>
                                     <Avatar>
@@ -50,11 +41,10 @@ export default function TodoList(props) {
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={todo}
+                                    primary={item.todos.title}
                                 />
-                                
                                 <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="delete">
+                                    <IconButton edge="end" aria-label="delete" color="secondary">
                                         <DeleteIcon />
                                     </IconButton>
                                 </ListItemSecondaryAction>

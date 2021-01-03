@@ -7,11 +7,19 @@ import TodoList from './../Todo/TodoList'
 import { Container } from '@material-ui/core';
 
 const Todo = () => {
-    const [lastTodo, setLastTodo] = useState([])
+    const [lastTodo, setLastTodo] = useState({
+        todos: 
+        [
+            {
+              title: '',
+              done: false
+            },
+        ]
+      })
     const getTodo = (newTodo) => {
         // setLastTodo(newTodo)
-        setLastTodo(...lastTodo, newTodo)
-        console.log(lastTodo)
+        setLastTodo(newTodo)
+        console.log(lastTodo, "lasttodo")
     }
     return (
         <Layout>

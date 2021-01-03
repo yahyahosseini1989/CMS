@@ -3,14 +3,37 @@ import { Input, Button } from '@material-ui/core';
 
 const NewTodo = (props) => {
 
-    const [newTodo, setNewTodo] = useState([])
+    const [newTodo, setNewTodo] = useState({
+        todos: 
+        [
+            {
+              title: '',
+              done: false
+            }
+        ]
+      })
     const handleChange = (e) => {
-        let Event = e.target.value;
-        setNewTodo(Event);
+        setNewTodo({
+            todos: 
+            [
+                {
+                  title: e.target.value,
+                  done: false
+                },
+            ]
+          });
     }
     const handleClick = () => {
         props.newTodo(newTodo);
-        setNewTodo([])
+        // setNewTodo({
+        //     todos: 
+        //     [
+        //         {
+        //           title: '',
+        //           done: false
+        //         },
+        //     ]
+        //   })
     }
 
     return (
@@ -19,13 +42,22 @@ const NewTodo = (props) => {
                 type="text"
                 name={"newTodo"}
                 onChange={(e) => { handleChange(e) }}
-                value={newTodo}
+                value={newTodo.title}
                 aria-describedby="my-helper-text"
+                className={'w-100'}
+                style={{
+                    width: "75%",
+                    margin: '15px auto'
+                }}
             />
             <Button
                 onClick={() => { handleClick() }}
                 variant="outlined"
-                color="primary"
+                color="secondary"
+                style={{
+                    width: "25%",
+                    margin: '15px auto'
+                }}
             >
                 Add
             </Button>
