@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Typography, Toolbar, IconButton, Badge } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import FormatListNumberedRtlIcon from '@material-ui/icons/FormatListNumberedRtl';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -17,19 +18,9 @@ const useStyles = makeStyles((theme) => ({
             display: 'block',
         },
     },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
+    bar: {
+        backgroundColor: '#591ee9',
+    }
 
 }));
 
@@ -38,26 +29,26 @@ export default function TodoAppBar() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static">
+            <AppBar position="static" className={classes.bar}>
                 <Toolbar>
                     <Typography className={classes.title} variant="h6" noWrap>
                         My Todo
                     </Typography>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 12 new mails" color="inherit">
-                            <Badge badgeContent={12} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
+                        <IconButton aria-label="Done" color="inherit">
                             <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
+                                <AssignmentTurnedInIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton aria-label="show 8 new notifications" color="inherit">
+                        <IconButton aria-label="Undone" color="inherit">
                             <Badge badgeContent={8} color="secondary">
                                 <NotificationsIcon />
+                            </Badge>
+                        </IconButton>
+                        <IconButton aria-label="All Todos" color="inherit">
+                            <Badge badgeContent={12} color="secondary">
+                                <FormatListNumberedRtlIcon />
                             </Badge>
                         </IconButton>
                     </div>

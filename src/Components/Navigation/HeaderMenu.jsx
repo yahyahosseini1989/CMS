@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  AppBar: {
+    background: '#333',
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -167,7 +170,7 @@ export default function PrimarySearchAppBar() {
   return (
     <>
       <div className={classes.grow}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.AppBar}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -196,7 +199,7 @@ export default function PrimarySearchAppBar() {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton aria-label="show 4 new mails" color="inherit">
+              {/* <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
                 </Badge>
@@ -205,7 +208,7 @@ export default function PrimarySearchAppBar() {
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
                 </Badge>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 edge="end"
                 aria-label="account of current user"

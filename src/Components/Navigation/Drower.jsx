@@ -17,6 +17,9 @@ const useStyles = makeStyles({
     fullList: {
         width: 'auto',
     },
+    link: {
+        textDecoration: 'none',
+    },
 });
 
 export default function SwipeableTemporaryDrawer(props) {
@@ -40,32 +43,32 @@ export default function SwipeableTemporaryDrawer(props) {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                <Link to="/">
+                <Link to="/" className={classes.link}>
                     <ListItem button >
                         <ListItemIcon><HomeIcon color="primary" /></ListItemIcon>
                         <ListItemText primary={"Home"} />
                     </ListItem>
                 </Link>
-                <Link to="/Users">
+                <Link to="/Users" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><AccountIcon color="primary" /></ListItemIcon>
                         <ListItemText primary={"Users"} />
                     </ListItem>
                 </Link>
-                <Link to="/Todo">
+                <Link to="/Todo" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><EventAvailableIcon color="primary" /></ListItemIcon>
                         <ListItemText primary={"Todo"} />
                     </ListItem>
                 </Link>
                 <Divider />
-                <Link to="/Contact">
+                <Link to="/Contact" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><HeadsetMicIcon color="primary" /></ListItemIcon>
                         <ListItemText primary={"Contact Us"} />
                     </ListItem>
                 </Link>
-                <Link to="/About">
+                <Link to="/About" className={classes.link}>
                     <ListItem button>
                         <ListItemIcon><HelpOutlineIcon color="primary" /></ListItemIcon>
                         <ListItemText primary={"About Us"} />
