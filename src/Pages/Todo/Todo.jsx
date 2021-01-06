@@ -17,15 +17,7 @@ const useStyles = makeStyles({
 
 const Todo = () => {
     const classes = useStyles();
-    const [lastTodo, setLastTodo] = useState({
-        todos:
-            [
-                {
-                    title: '',
-                    done: false
-                },
-            ]
-    })
+    const [lastTodo, setLastTodo] = useState({ todos: [] })
     const getTodo = (newTodo) => {
         // setLastTodo(...lastTodo,newTodo)
         setLastTodo(prevState => {
@@ -37,7 +29,6 @@ const Todo = () => {
             }
         })
     }
-    console.log(lastTodo)
 
     return (
         <Layout>

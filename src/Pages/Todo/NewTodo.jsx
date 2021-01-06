@@ -12,27 +12,23 @@ const useStyles = makeStyles(() => ({
 const NewTodo = (props) => {
     const classes = useStyles();
     const [newTodo, setNewTodo] = useState({
-        todos:
-            [
-                {
-                    title: '',
-                    done: false
-                }
-            ]
+        title: '',
+        done: false
     })
     const handleChange = (e) => {
-        setNewTodo({
-            todos:
-                [
-                    {
-                        title: e.target.value,
-                        done: false
-                    },
-                ]
-        });
+        setNewTodo(
+            {
+                title: e.target.value,
+                done: false
+            },
+        );
     }
     const handleClick = () => {
         props.newTodo(newTodo);
+        setNewTodo({
+            ...newTodo,
+            title: '',
+        })
     }
 
     return (
@@ -49,7 +45,7 @@ const NewTodo = (props) => {
                     width: "70%",
                     margin: '15px '
                 }}
-                
+
             />
             <Button
                 onClick={() => { handleClick() }}
