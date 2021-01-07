@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function TodoAppBar() {
+export default function TodoAppBar(props) {
     const classes = useStyles();
 
     return (
@@ -37,17 +37,17 @@ export default function TodoAppBar() {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="Done" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
+                            <Badge badgeContent={props.todoDone} color="secondary">
                                 <AssignmentTurnedInIcon />
                             </Badge>
                         </IconButton>
                         <IconButton aria-label="Undone" color="inherit">
-                            <Badge badgeContent={8} color="secondary">
+                            <Badge badgeContent={props.todoUndone} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
                         <IconButton aria-label="All Todos" color="inherit">
-                            <Badge badgeContent={12} color="secondary">
+                            <Badge badgeContent={props.todoLenght} color="secondary">
                                 <FormatListNumberedRtlIcon />
                             </Badge>
                         </IconButton>

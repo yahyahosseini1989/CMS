@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Avatar, IconButton, Grid } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
 export default function TodoList(props) {
     const classes = useStyles();
     const todos = props.lastTodo.todos;
+    const deleteHandler = (id) => {
+        props.deleteItem(id)
+    }
+    const CheckBoxHandler = (item) => {
+        props.done(item)
+    }
 
     return (
         <>
@@ -29,16 +37,32 @@ export default function TodoList(props) {
                         {todos.map((item, index) => (
                             <ListItem key={index}>
                                 <ListItemAvatar>
-                                    <Avatar>
+                                    <Avatar
+                                        color={"primary"}
+                                    >
                                         <FolderIcon />
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={item.title}
+                                    secondary={Date()}
                                 />
                                 <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="delete" color="secondary">
+                                    <IconButton
+                                        edge="end"
+                                        aria-label="delete"
+                                        color="secondary"
+                                        onClick={() => { deleteHandler(item.id) }}
+                                    >
                                         <DeleteIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        edge="end"
+                                        aria-label="delete"
+                                        color="primary"
+                                        onClick={() => { CheckBoxHandler(item) }}
+                                    >
+                                        {(item.done === false) ? <CheckBoxOutlineBlankIcon /> : <CheckBoxIcon />}
                                     </IconButton>
                                 </ListItemSecondaryAction>
                             </ListItem>
