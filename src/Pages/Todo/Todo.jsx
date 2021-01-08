@@ -42,11 +42,32 @@ const Todo = () => {
         setOpenSnakbar(true)
     }
     const doneHandler = (item) => {
-        let itemStatus = item.done
-        // setLastTodo(prevState => {
-        //     return { todos: prevState.todos.done(item => item.done = true) }
-        // })
-        console.log(itemStatus)
+        // let newTodo = lastTodo.todos.find(Todo => Todo.id == item.id)
+        // if (!newTodo.done ) {
+        //     newTodo.done = true
+        // } else { newTodo.done = true }
+        // console.log(newTodo, 'newTodo')
+        let myTodo = lastTodo.todos
+        let newArray = [...myTodo];
+        for (let i = 0; i < newArray.length; i++) {
+            if (newArray[i].id === item.id) {
+                newArray[i].done = !newArray[i].done
+            }
+        }
+        setLastTodo({ todos: newArray })
+
+        // for (let index = 0; index < myTodo.length; index++) {
+        //  if (myTodo[index].id === item.id) {
+        //     if (lastTodo.todos[index].done === true) {
+        //         lastTodo.todos[index].done === false;
+        //     } else { lastTodo.todos[index].done === true; }
+        // setLastTodo(lastTodo.todos)
+        //    let xx = myTodo.todos[index]
+        //    let x = myTodo[index].done === true ? false :true  
+        //     setLastTodo()
+        // 
+        //  }
+        // }
     }
     const closeSnackbar = (event, reason) => {
         if (reason === 'clickaway') {

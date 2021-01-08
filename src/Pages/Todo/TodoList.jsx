@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Avatar, IconButton, Grid } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -25,10 +25,10 @@ export default function TodoList(props) {
     const deleteHandler = (id) => {
         props.deleteItem(id)
     }
+    const { todoState, setTodoState } = useState([])
     const CheckBoxHandler = (item) => {
         props.done(item)
     }
-
     return (
         <>
             <Grid item xs={12} >
@@ -45,7 +45,7 @@ export default function TodoList(props) {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={item.title}
-                                    secondary={Date()}
+                                    secondary={Date()}//new Date().getTime()
                                 />
                                 <ListItemSecondaryAction>
                                     <IconButton
