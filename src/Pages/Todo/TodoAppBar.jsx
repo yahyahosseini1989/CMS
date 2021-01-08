@@ -26,7 +26,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TodoAppBar(props) {
     const classes = useStyles();
-
+    const handleDoneFilter = () => {
+        props.filterDone()
+    }
+    const handleUndoneFilter = () => {
+        props.filterUndone()
+    }
     return (
         <div className={classes.grow}>
             <AppBar position="static" className={classes.bar}>
@@ -36,12 +41,12 @@ export default function TodoAppBar(props) {
                     </Typography>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="Done" color="inherit">
+                        <IconButton aria-label="Done" color="inherit" onClick={() => { handleDoneFilter() }}>
                             <Badge badgeContent={props.todoDone} color="secondary">
                                 <AssignmentTurnedInIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton aria-label="Undone" color="inherit">
+                        <IconButton aria-label="Undone" color="inherit" onClick={() => { handleUndoneFilter() }}>
                             <Badge badgeContent={props.todoUndone} color="secondary">
                                 <NotificationsIcon />
                             </Badge>

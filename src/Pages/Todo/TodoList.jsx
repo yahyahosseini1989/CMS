@@ -20,12 +20,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TodoList(props) {
+    const Hours = new Date().getHours()
+    const Minutes = new Date().getMinutes()
+    const time = Hours + ':' + Minutes;
     const classes = useStyles();
     const todos = props.lastTodo.todos;
     const deleteHandler = (id) => {
         props.deleteItem(id)
     }
-    const { todoState, setTodoState } = useState([])
     const CheckBoxHandler = (item) => {
         props.done(item)
     }
@@ -45,7 +47,7 @@ export default function TodoList(props) {
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={item.title}
-                                    secondary={Date()}//new Date().getTime()
+                                    secondary={time}//new Date().getTime()
                                 />
                                 <ListItemSecondaryAction>
                                     <IconButton

@@ -22,6 +22,12 @@ const Todo = () => {
     const [todoUndone, setTodoUndone] = useState("0")
     const [lastTodo, setLastTodo] = useState({ todos: [] })
     const [SnackbarsDetail, setSnackbarsDetail] = useState({ message: '', alert: '' })
+    const closeSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnakbar(false)
+    }
     const getTodo = (newTodo) => {
         setLastTodo(prevState => {
             return {
@@ -32,21 +38,18 @@ const Todo = () => {
             }
         })
         setTodoLenght(lastTodo.todos.length + 1);
+        setTodoUndone(lastTodo.todos.length + 1);
     }
     const deleteItem = (itemId) => {
         setLastTodo(prevState => {
             return { todos: prevState.todos.filter(item => item.id !== itemId) }
         })
         setTodoLenght(lastTodo.todos.length - 1);
+        setTodoUndone(lastTodo.todos.length - 1);
         setSnackbarsDetail({ message: 'The todo was successfully deleted', alert: 'success', })
         setOpenSnakbar(true)
     }
     const doneHandler = (item) => {
-        // let newTodo = lastTodo.todos.find(Todo => Todo.id == item.id)
-        // if (!newTodo.done ) {
-        //     newTodo.done = true
-        // } else { newTodo.done = true }
-        // console.log(newTodo, 'newTodo')
         let myTodo = lastTodo.todos
         let newArray = [...myTodo];
         for (let i = 0; i < newArray.length; i++) {
@@ -55,31 +58,24 @@ const Todo = () => {
             }
         }
         setLastTodo({ todos: newArray })
-
-        // for (let index = 0; index < myTodo.length; index++) {
-        //  if (myTodo[index].id === item.id) {
-        //     if (lastTodo.todos[index].done === true) {
-        //         lastTodo.todos[index].done === false;
-        //     } else { lastTodo.todos[index].done === true; }
-        // setLastTodo(lastTodo.todos)
-        //    let xx = myTodo.todos[index]
-        //    let x = myTodo[index].done === true ? false :true  
-        //     setLastTodo()
-        // 
-        //  }
-        // }
     }
-    const closeSnackbar = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpenSnakbar(false)
+    const filterDone = () => {
+        // setTodoDone(parseInt(todoDone + 1))
+    }
+    const filterUndone = () => {
+        // setTodoUndone(parseInt(todoUndone + 1))
     }
     return (
         <Layout>
             <Container maxWidth="sm">
                 <div className={classes.TodoWrap}>
-                    <TodoAppBar todoLenght={todoLenght} todoDone={todoDone} todoUndone={todoUndone} />
+                    <TodoAppBar
+                        todoLenght={todoLenght}
+                        todoDone={todoDone}
+                        todoUndone={todoUndone}
+                        filterDone={() => { filterDone(todoDone) }}
+                        filterUndone={() => { filterUndone() }}
+                    />
                     <NewTodo newTodo={(newTodo) => { getTodo(newTodo) }} />
                     <TodoList
                         lastTodo={lastTodo}
